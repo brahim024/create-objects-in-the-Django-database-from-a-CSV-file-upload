@@ -1,6 +1,7 @@
-from django.form import forms
-from .models import Csv
+from django import forms
+from .models import Csvs
 # create form here
-class CsvModelForm(forms.ModelForm):
-	model=Csv
-	fields=('file_name')
+class CsvsModelForm(forms.ModelForm):
+	class Meta:
+		model=Csvs
+		fields=("file_name",)
