@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from .forms import CsvsModelForm
-from .models import Csvs
+from .models import Csvs 
+from sales.models import Sale
 import csv
+from django.contrib.auth.models import User
 # Create your views here.
 def upload_file(request):
 	form= CsvsModelForm(request.POST or None , request.FILES or None)
@@ -16,9 +18,19 @@ def upload_file(request):
 					pass
 				else:
 					row="".join(row)
-					row=row.replace(";","  |  ")
+					row =row.replace(";","   ")
 					row =row.split()
-					print(row)
+					#print(row)
+					product=row[1].upper()
+					user=User.objects.all()
+					Sale.objects.create(
+							product=product,
+							quantity=int(row[2]),
+							saleman= user,
+
+						)
+					
+
 
 			obj.activated=True
 			obj.save()
